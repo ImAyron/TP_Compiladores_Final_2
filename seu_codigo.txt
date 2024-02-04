@@ -5,13 +5,13 @@ int d;
     
 a = 10;
 b = 5;
-if (a > b) {
+if (a >= b) {
     c = a + b;
 } else {
     c = a - b;
 }
 
-while (b > 0) {
+while (b <= 0) {
     c = c * 2;
     b = b - 1;
 }

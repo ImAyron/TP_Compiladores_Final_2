@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "quadrupla.h"
+#include "quadrupleStruct.h"
 
 extern FILE *yyin;
 extern int yylex();
@@ -16,7 +16,7 @@ char*temp(){
 }
 %}
 
-%token INT IF ELSE WHILE DO FOR NUM ID
+%token INT IF ELSE WHILE DO FOR NUM ID MENORIGUAL MAIORIGUAL DIFERENTE NEGACAO IGUAL E OU
 %left '+' '-'
 %left '*' '/'
 %right '='
@@ -69,13 +69,84 @@ condition:
             printf("(>,%s,%s,%s)\n", $1, $3, $$);
         }
     }
-    |exp '<' exp
+    |
+    exp '<' exp
     {
         if ($1 != '_' && $3 != '_') {
             char *temp_name = temp(); // Crie um nome temporário
             printf("(<,%s,%s,%s)\n", $1, $3, temp_name);
         } else {
             printf("(<,%s,%s,%s)\n", $1, $3, $$);
+        }
+    }
+    |
+    exp MENORIGUAL exp
+    {
+        if ($1 != '_' && $3 != '_') {
+            char *temp_name = temp(); // Crie um nome temporário
+            printf("(<=,%s,%s,%s)\n", $1, $3, temp_name);
+        } else {
+            printf("(<=,%s,%s,%s)\n", $1, $3, $$);
+        }
+    }
+    |
+    exp MAIORIGUAL exp
+    {
+        if ($1 != '_' && $3 != '_') {
+            char *temp_name = temp(); // Crie um nome temporário
+            printf("(>=,%s,%s,%s)\n", $1, $3, temp_name);
+        } else {
+            printf("(>=,%s,%s,%s)\n", $1, $3, $$);
+        }
+    }
+    |
+    exp NEGACAO exp
+    {
+        if ($1 != '_' && $3 != '_') {
+            char *temp_name = temp(); // Crie um nome temporário
+            printf("(!,%s,%s,%s)\n", $1, $3, temp_name);
+        } else {
+            printf("(!,%s,%s,%s)\n", $1, $3, $$);
+        }
+    }
+    |
+    exp DIFERENTE exp
+    {
+        if ($1 != '_' && $3 != '_') {
+            char *temp_name = temp(); // Crie um nome temporário
+            printf("(!=,%s,%s,%s)\n", $1, $3, temp_name);
+        } else {
+            printf("(!=,%s,%s,%s)\n", $1, $3, $$);
+        }
+    }
+    |
+    exp IGUAL exp
+    {
+        if ($1 != '_' && $3 != '_') {
+            char *temp_name = temp(); // Crie um nome temporário
+            printf("(==,%s,%s,%s)\n", $1, $3, temp_name);
+        } else {
+            printf("(==,%s,%s,%s)\n", $1, $3, $$);
+        }
+    }
+     |
+    exp E exp
+    {
+        if ($1 != '_' && $3 != '_') {
+            char *temp_name = temp(); // Crie um nome temporário
+            printf("(&&,%s,%s,%s)\n", $1, $3, temp_name);
+        } else {
+            printf("(&&,%s,%s,%s)\n", $1, $3, $$);
+        }
+    }
+     |
+    exp OU exp
+    {
+        if ($1 != '_' && $3 != '_') {
+            char *temp_name = temp(); // Crie um nome temporário
+            printf("(||,%s,%s,%s)\n", $1, $3, temp_name);
+        } else {
+            printf("(||,%s,%s,%s)\n", $1, $3, $$);
         }
     }
     ;
