@@ -46,7 +46,7 @@ Além disso, esta etapa está incluída no arquivo `muxtela.y`.
 
 Para testar o compilador, foram criados alguns arquivos de teste que estão localizados na pasta raíz do projeto.
 Porém é possível criar novos arquivos de teste e executá-los utilizando o compilador.
-Devemos selecionar qual arquivo `.txt` será utilizado para a execução do compilador, e em seguida executar o comando `./muxtela.exe < arquivo_de_teste.txt`.
+Devemos selecionar qual arquivo `.txt` será utilizado para a execução do compilador, e em seguida executar o comando `./muxtela.exe seu_codigo.txt`.
 
 ## 🚀 Executando o Projeto
 
