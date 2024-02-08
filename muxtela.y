@@ -47,14 +47,72 @@ statement:
     }
     |
     IF '(' condition ')' '{' statement '}'
+    {
+       
+        char *label1 = temp();
+        char *label2 = temp();
+        printf("(IF, %s, %s, )\n", $3, label1);
+        printf("(+, %s, %s, %s)\n", $3, label1, $$);
+        printf("(=, %s, , %s)\n", $$, $3);
+        printf("(goto, , , %s)\n", label2);
+        printf("(%s, , , )\n", label1);
+    }
     |
     IF '(' condition ')' '{' statement '}' ELSE '{' statement '}'
+    {
+        printf("IAM HERE if\n");
+        char *label1 = temp();
+        char *label2 = temp();
+        printf("(IF, %s, %s, %s)\n", $3, $6, label1);
+        printf("(goto, , , %s)\n", label2);
+        printf("(%s, , , )\n", label1);
+    }
     |
-    WHILE '(' condition ')' '{' statement '}'
+    WHILE '(' condition ')' '{'
+    {
+        char *label1 = temp();
+        char *label2 = temp();
+        char *temp0 = temp();
+        printf("(%s, , , )\n", label1);
+        printf("(IF, %s, , %s)\n", $3, label2);
+        printf("(%s, , , )\n", label2);
+        printf("(goto, , , %s)\n", label1);
+        printf("(%s, , , )\n", label2);
+    }
+    statement
+    {
+        printf("if (!%s) goto %s;\n", $3, $1); // Condição de saída do loop
+        printf("goto %s;\n", $1); // Salto de volta para o início do loop
+        printf("%s:\n", $2); // Imprime o rótulo de fim
+    }
+    '}'
+    ;
+
     |
-    DO '{'statement '}' WHILE '(' condition ')' ';'
+    DO '{' statement '}' WHILE '(' condition ')' ';'
+    {
+        char *label1 = temp();
+        char *label2 = temp();
+        char *temp0 = temp();
+        printf("(%s, , , )\n", label1);
+        printf("(%s, , , )\n", label2);
+        printf("(IF, %s, , %s)\n", $5, label1);
+        printf("(goto, , , %s)\n", label2);
+        printf("(%s, , , )\n", label1);
+    }
     |
     FOR '(' statement ';' condition ';' statement ')' '{' statement '}'
+    {
+        char *label1 = temp();
+        char *label2 = temp();
+        char *temp0 = temp();
+        printf("(%s, , , )\n", label1);
+        printf("(%s, , , )\n", label2);
+        printf("(IF, %s, , %s)\n", $5, label2);
+        printf("(goto, , , %s)\n", label1);
+        printf("(%s, , , )\n", label2);
+    }
+
     ;
 
 condition:
